@@ -91,7 +91,7 @@ SessionView.prototype.onGridNote = function (note, velocity)
             break;
             
         case CONTROL_MODE_TRACK_SELECT:
-            tb.select (index);
+            this.selectTrack (index);
             break;
             
         case CONTROL_MODE_MUTE:
