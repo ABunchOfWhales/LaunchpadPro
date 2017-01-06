@@ -179,12 +179,6 @@ LaunchpadPro.prototype.shutdown = function ()
         this.setButton (this.buttons[i], LAUNCHPAD_BUTTON_STATE_OFF);
 };
 
-// Note: Weird to send to the DAW via LaunchpadPro...
-LaunchpadPro.prototype.sendMidiEvent = function (status, data1, data2)
-{
-    this.noteInput.sendRawMidiEvent (status, data1, data2);
-};
-
 LaunchpadPro.prototype.isGridNote = function (note)
 {
     return true;
