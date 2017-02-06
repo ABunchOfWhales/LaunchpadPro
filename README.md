@@ -1,8 +1,8 @@
-LaunchpadPro4Bitwig (ABunchOfWales Version)
-===========================================
+LaunchpadPro
+============
 
 Bitwig Studio script to support Novations Launchpad Pro controller (MKII is not supported).
-Differences from the original script:
+Differences from the original script from Mr.Moss:
 ... TODO
 
 
