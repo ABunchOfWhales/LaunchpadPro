@@ -24,14 +24,14 @@ SessionView.prototype.onActivate = function ()
 
 SessionView.prototype.updateSceneButtons = function ()
 {
-    this.surface.setButton (LAUNCHPAD_BUTTON_SCENE1, LAUNCHPAD_COLOR_GREEN);
-    this.surface.setButton (LAUNCHPAD_BUTTON_SCENE2, LAUNCHPAD_COLOR_GREEN);
-    this.surface.setButton (LAUNCHPAD_BUTTON_SCENE3, LAUNCHPAD_COLOR_GREEN);
-    this.surface.setButton (LAUNCHPAD_BUTTON_SCENE4, LAUNCHPAD_COLOR_GREEN);
-    this.surface.setButton (LAUNCHPAD_BUTTON_SCENE5, LAUNCHPAD_COLOR_GREEN);
-    this.surface.setButton (LAUNCHPAD_BUTTON_SCENE6, LAUNCHPAD_COLOR_GREEN);
-    this.surface.setButton (LAUNCHPAD_BUTTON_SCENE7, LAUNCHPAD_COLOR_GREEN);
-    this.surface.setButton (LAUNCHPAD_BUTTON_SCENE8, LAUNCHPAD_COLOR_GREEN);
+    this.surface.setButton (LAUNCHPAD_BUTTON_SCENE1, LAUNCHPAD_COLOR_LIME_LO);
+    this.surface.setButton (LAUNCHPAD_BUTTON_SCENE2, LAUNCHPAD_COLOR_LIME_LO);
+    this.surface.setButton (LAUNCHPAD_BUTTON_SCENE3, LAUNCHPAD_COLOR_LIME_LO);
+    this.surface.setButton (LAUNCHPAD_BUTTON_SCENE4, LAUNCHPAD_COLOR_LIME_LO);
+    this.surface.setButton (LAUNCHPAD_BUTTON_SCENE5, LAUNCHPAD_COLOR_LIME_LO);
+    this.surface.setButton (LAUNCHPAD_BUTTON_SCENE6, LAUNCHPAD_COLOR_LIME_LO);
+    this.surface.setButton (LAUNCHPAD_BUTTON_SCENE7, LAUNCHPAD_COLOR_LIME_LO);
+    this.surface.setButton (LAUNCHPAD_BUTTON_SCENE8, LAUNCHPAD_COLOR_LIME_LO);
 };
 
 SessionView.prototype.onSession = function (event)
@@ -59,15 +59,15 @@ SessionView.prototype.onScene = function (scene, event)
 
 SessionView.prototype.onGridNote = function (note, velocity)
 {
+	if (velocity == 0)
+        return;
+
     if (this.surface.getControlMode () == CONTROL_MODE_OFF)
     {
-        if (this.surface.isShiftPressed ())
-            this.onGridNoteBankSelection (note, velocity, false);
-        else
-            AbstractSessionView.prototype.onGridNote.call (this, note, velocity);
-        return;
+        AbstractSessionView.prototype.onGridNote.call (this, note, velocity);
+		return;
     }
-    
+
     // Block 1st row
     if (note >= 44)
     {
@@ -78,9 +78,6 @@ SessionView.prototype.onGridNote = function (note, velocity)
             AbstractSessionView.prototype.onGridNote.call (this, note - 8, velocity);
         return;
     }
-    
-    if (velocity == 0)
-        return;
 
     var index = note - 36;
     var tb = this.model.getCurrentTrackBank ();
@@ -105,6 +102,9 @@ SessionView.prototype.onGridNote = function (note, velocity)
         case CONTROL_MODE_STOP_CLIP:
             tb.stop (index);
             break;
+			
+		default:
+			break;
     }
 };
 
@@ -192,7 +192,7 @@ SessionView.prototype.drawGrid = function ()
             for (var x = 0; x < this.columns; x++)
             {
                 var track = tb.getTrack (x);
-                this.surface.pads.lightEx (x, 7, track.exists ? (track.recarm ? LAUNCHPAD_COLOR_RED_HI : LAUNCHPAD_COLOR_RED_LO) : LAUNCHPAD_COLOR_BLACK, false, false);
+                this.surface.pads.lightEx (x, 7, track.exists ? (track.recarm ? LAUNCHPAD_COLOR_RED_HI : LAUNCHPAD_COLOR_SKY_LO) : LAUNCHPAD_COLOR_BLACK, false, false);
             }
             break;
 
@@ -200,7 +200,7 @@ SessionView.prototype.drawGrid = function ()
             for (var x = 0; x < this.columns; x++)
             {
                 var track = tb.getTrack (x);
-                this.surface.pads.lightEx (x, 7, track.exists ? (track.selected ? LAUNCHPAD_COLOR_GREEN_HI : LAUNCHPAD_COLOR_GREEN_LO) : LAUNCHPAD_COLOR_BLACK, false, false);
+                this.surface.pads.lightEx (x, 7, track.exists ? (track.selected ? LAUNCHPAD_COLOR_GREEN_HI : LAUNCHPAD_COLOR_SKY_LO) : LAUNCHPAD_COLOR_BLACK, false, false);
             }
             break;
 
@@ -208,7 +208,7 @@ SessionView.prototype.drawGrid = function ()
             for (var x = 0; x < this.columns; x++)
             {
                 var track = tb.getTrack (x);
-                this.surface.pads.lightEx (x, 7, track.exists ? (track.mute ? LAUNCHPAD_COLOR_YELLOW_HI : LAUNCHPAD_COLOR_YELLOW_LO) : LAUNCHPAD_COLOR_BLACK, false, false);
+                this.surface.pads.lightEx (x, 7, track.exists ? (track.mute ? LAUNCHPAD_COLOR_YELLOW_HI : LAUNCHPAD_COLOR_SKY_LO) : LAUNCHPAD_COLOR_BLACK, false, false);
             }
             break;
 
@@ -216,7 +216,7 @@ SessionView.prototype.drawGrid = function ()
             for (var x = 0; x < this.columns; x++)
             {
                 var track = tb.getTrack (x);
-                this.surface.pads.lightEx (x, 7, track.exists ? (track.solo ? LAUNCHPAD_COLOR_BLUE_HI : LAUNCHPAD_COLOR_BLUE_LO) : LAUNCHPAD_COLOR_BLACK, false, false);
+                this.surface.pads.lightEx (x, 7, track.exists ? (track.solo ? LAUNCHPAD_COLOR_MAGENTA : LAUNCHPAD_COLOR_SKY_LO) : LAUNCHPAD_COLOR_BLACK, false, false);
             }
             break;
             
@@ -224,7 +224,7 @@ SessionView.prototype.drawGrid = function ()
             for (var x = 0; x < this.columns; x++)
             {
                 var track = tb.getTrack (x);
-                this.surface.pads.lightEx (x, 7, track.exists ? LAUNCHPAD_COLOR_ROSE : LAUNCHPAD_COLOR_BLACK, false, false);
+                this.surface.pads.lightEx (x, 7, track.exists ? LAUNCHPAD_COLOR_SKY_LO : LAUNCHPAD_COLOR_BLACK, false, false);
             }
             break;
     }

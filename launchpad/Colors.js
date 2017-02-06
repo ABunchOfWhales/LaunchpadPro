@@ -33,9 +33,9 @@ var LAUNCHPAD_COLOR_SPRING_HI           = 25;
 var LAUNCHPAD_COLOR_SPRING              = 26;
 var LAUNCHPAD_COLOR_SPRING_LO           = 27;
 var LAUNCHPAD_COLOR_SPRING_TURQUOISE    = 28;
-var LAUNCHPAD_COLOR_TURQUOISE_LO        = 29;
+var LAUNCHPAD_COLOR_TURQUOISE_LO        = 31;
 var LAUNCHPAD_COLOR_TURQUOISE           = 30;
-var LAUNCHPAD_COLOR_TURQUOISE_HI        = 31;
+var LAUNCHPAD_COLOR_TURQUOISE_HI        = 29;
 var LAUNCHPAD_COLOR_TURQUOISE_CYAN      = 32;
 var LAUNCHPAD_COLOR_CYAN_HI             = 33;
 var LAUNCHPAD_COLOR_CYAN                = 34;
@@ -66,8 +66,8 @@ var LAUNCHPAD_COLOR_PINK                = 58;
 var LAUNCHPAD_COLOR_PINK_LO             = 59;
 
 Scales.SCALE_COLOR_OFF          = LAUNCHPAD_COLOR_BLACK;
-Scales.SCALE_COLOR_OCTAVE       = LAUNCHPAD_COLOR_OCEAN_HI;
-Scales.SCALE_COLOR_NOTE         = LAUNCHPAD_COLOR_WHITE;
+Scales.SCALE_COLOR_OCTAVE       = LAUNCHPAD_COLOR_SKY;
+Scales.SCALE_COLOR_NOTE         = LAUNCHPAD_COLOR_SKY_LO;
 Scales.SCALE_COLOR_OUT_OF_SCALE = LAUNCHPAD_COLOR_BLACK;
 
 AbstractSessionView.CLIP_COLOR_IS_RECORDING        = { color: LAUNCHPAD_COLOR_RED_HI, blink: LAUNCHPAD_COLOR_RED_HI, fast: false };
@@ -76,16 +76,16 @@ AbstractSessionView.CLIP_COLOR_IS_PLAYING          = { color: LAUNCHPAD_COLOR_GR
 AbstractSessionView.CLIP_COLOR_IS_PLAYING_QUEUED   = { color: LAUNCHPAD_COLOR_GREEN,  blink: LAUNCHPAD_COLOR_BLACK,  fast: true  };
 AbstractSessionView.CLIP_COLOR_HAS_CONTENT         = { color: LAUNCHPAD_COLOR_AMBER,  blink: null,               fast: false };
 AbstractSessionView.CLIP_COLOR_NO_CONTENT          = { color: LAUNCHPAD_COLOR_BLACK,  blink: null,               fast: false };
-AbstractSessionView.CLIP_COLOR_RECORDING_ARMED     = { color: LAUNCHPAD_COLOR_RED_LO, blink: null,               fast: false };
+AbstractSessionView.CLIP_COLOR_RECORDING_ARMED     = { color: LAUNCHPAD_COLOR_BLACK,  blink: null,               fast: false };
 AbstractSessionView.USE_CLIP_COLOR                 = true;
 
 AbstractSequencerView.COLOR_STEP_HILITE_NO_CONTENT = LAUNCHPAD_COLOR_GREEN_LO;
 AbstractSequencerView.COLOR_STEP_HILITE_CONTENT    = LAUNCHPAD_COLOR_GREEN_HI;
 AbstractSequencerView.COLOR_NO_CONTENT             = LAUNCHPAD_COLOR_BLACK;
-AbstractSequencerView.COLOR_CONTENT                = LAUNCHPAD_COLOR_BLUE_HI;
-AbstractSequencerView.COLOR_CONTENT_CONT           = LAUNCHPAD_COLOR_BLUE_ORCHID;
-AbstractSequencerView.COLOR_MEASURE                = LAUNCHPAD_COLOR_WHITE;
-AbstractSequencerView.COLOR_ACTIVE_MEASURE         = LAUNCHPAD_COLOR_GREEN;
+AbstractSequencerView.COLOR_CONTENT                = LAUNCHPAD_COLOR_RED_AMBER;
+AbstractSequencerView.COLOR_CONTENT_CONT           = LAUNCHPAD_COLOR_AMBER_LO;
+AbstractSequencerView.COLOR_MEASURE                = LAUNCHPAD_COLOR_GREY_LO;
+AbstractSequencerView.COLOR_ACTIVE_MEASURE         = LAUNCHPAD_COLOR_GREEN_LO;
 
 AbstractPlayView.COLOR_PLAY   = LAUNCHPAD_COLOR_GREEN_HI;
 AbstractPlayView.COLOR_RECORD = LAUNCHPAD_COLOR_RED_HI;
@@ -93,7 +93,7 @@ AbstractPlayView.COLOR_OFF    = LAUNCHPAD_COLOR_BLACK;
 
 AbstractDrumView.COLOR_RECORD         = LAUNCHPAD_COLOR_RED_HI;
 AbstractDrumView.COLOR_PLAY           = LAUNCHPAD_COLOR_GREEN_HI;
-AbstractDrumView.COLOR_SELECTED       = LAUNCHPAD_COLOR_BLUE_HI;
+AbstractDrumView.COLOR_SELECTED       = LAUNCHPAD_COLOR_GREEN;
 AbstractDrumView.COLOR_MUTED          = LAUNCHPAD_COLOR_AMBER_LO;
 AbstractDrumView.COLOR_HAS_CONTENT    = LAUNCHPAD_COLOR_YELLOW_HI;
 AbstractDrumView.COLOR_NO_CONTENT     = LAUNCHPAD_COLOR_YELLOW_LO;

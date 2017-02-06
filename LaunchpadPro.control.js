@@ -15,9 +15,9 @@ var controller = null;
 host.defineController ("Novation", "LaunchpadPro4Bitwig", "1.12", "80B63970-64F1-11E5-A837-0800200C9A66", "Jürgen Moßgraber");
 host.defineMidiPorts (1, 1);
 
-host.platformIsWindows () && host.addDeviceNameBasedDiscoveryPair (["MIDIIN2 (Launchpad Pro)"], ["MIDIOUT2 (Launchpad Pro)"]);
-host.platformIsLinux () && host.addDeviceNameBasedDiscoveryPair (["Launchpad Pro MIDI 2"], ["Launchpad Pro MIDI 2"]);
-host.platformIsMac () && host.addDeviceNameBasedDiscoveryPair (["Launchpad Pro Standalone Port"], ["Launchpad Pro Standalone Port"]);
+host.platformIsWindows () && host.addDeviceNameBasedDiscoveryPair (["MIDIIN2 (Launchpad Pro 3)"], ["MIDIOUT2 (Launchpad Pro 3)"]);
+//host.platformIsLinux () && host.addDeviceNameBasedDiscoveryPair (["Launchpad Pro MIDI 2"], ["Launchpad Pro MIDI 2"]);
+//host.platformIsMac () && host.addDeviceNameBasedDiscoveryPair (["Launchpad Pro Standalone Port"], ["Launchpad Pro Standalone Port"]);
 
 function init ()
 {

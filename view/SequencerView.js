@@ -5,7 +5,7 @@
 function SequencerView (model)
 {
     AbstractNoteSequencerView.call (this, model);
-    this.cursorColor = LAUNCHPAD_COLOR_BLUE;
-    this.modeColor = LAUNCHPAD_COLOR_BLUE;
+    this.cursorColor = LAUNCHPAD_COLOR_SKY;
+    this.modeColor = LAUNCHPAD_COLOR_SKY;
 }
 SequencerView.prototype = new AbstractNoteSequencerView ();

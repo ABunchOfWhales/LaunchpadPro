@@ -68,7 +68,7 @@ function Controller ()
     
     scheduleTask (doObject (this, function ()
     {
-        this.surface.setActiveView (VIEW_PLAY);
+        this.surface.setActiveView (VIEW_SESSION);
     }), null, 100);
 }
 Controller.prototype = new AbstractController ();
@@ -80,15 +80,23 @@ Controller.prototype.handleTrackChange = function (index, isSelected)
     
     // Recall last used view (if we are not in session mode)
     var activeView = this.surface.getActiveView ();
-    if (activeView == null || activeView.isNoteViewActive ())
-    {
-        var viewID = this.model.getCurrentTrackBank ().getPreferredView (index);
-        this.surface.setActiveView (viewID == null ? VIEW_PLAY : viewID);
-    }
+
+	if (activeView == null)
+	{
+		var viewID = this.model.getCurrentTrackBank ().getPreferredView (index);
+		this.surface.setActiveView (viewID == null ? VIEW_SESSION : viewID);
+	}
+	else
+	{
+		if (activeView.isNoteViewActive ())
+		{
+			this.surface.setActiveView (VIEW_PLAY);
+		}
+	}
     if (this.surface.isActiveView (VIEW_PLAY))
         this.surface.getActiveView ().updateNoteMapping ();
      
     // Reset drum octave because the drum pad bank is also reset
-    this.scales.setDrumOctave (0);
-    this.surface.getView (VIEW_DRUM).updateNoteMapping ();
+    //this.scales.setDrumOctave (0);
+    //this.surface.getView (VIEW_DRUM).updateNoteMapping ();
 };

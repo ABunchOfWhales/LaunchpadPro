@@ -64,8 +64,8 @@ AbstractView.prototype.onUndo = function (event)
 
 AbstractView.prototype.onDelete = function (event)
 {
-    if (event.isUp ())
-        this.model.getApplication ().deleteSelection ();
+    //if (event.isUp ())
+    //    this.model.getApplication ().deleteSelection ();
 };
 
 AbstractView.prototype.onQuantize = function (event)
@@ -80,13 +80,8 @@ AbstractView.prototype.onQuantize = function (event)
 
 AbstractView.prototype.onDuplicate = function (event)
 {
-    if (!event.isDown ())
-        return;
-    
-    if (this.surface.isShiftPressed ())
-        this.model.getTransport ().toggleLoop ();
-    else    
-        this.model.getApplication ().duplicate ();
+	//if (event.isUp ())
+    //   this.model.getApplication ().duplicate ();
 };
 
 AbstractView.prototype.onDouble = function (event)
@@ -100,7 +95,7 @@ AbstractView.prototype.onDouble = function (event)
         return;
     }
 
-    this.newClip ();
+    //this.newClip ();
 };
 
 AbstractView.prototype.newClip = function ()
@@ -127,7 +122,7 @@ AbstractView.prototype.newClip = function ()
     if (slotIndex != slot.index)
         slots.select (slot.index);
     slots.launch (slot.index);
-    this.model.getTransport ().setLauncherOverdub (true);
+    //this.model.getTransport ().setLauncherOverdub (true);
 };
 
 AbstractView.prototype.onRecord = function (event)
@@ -135,9 +130,9 @@ AbstractView.prototype.onRecord = function (event)
     if (!event.isDown ())
         return;
     if (this.surface.isShiftPressed ())
-        this.model.getTransport ().toggleLauncherOverdub ();
+		this.model.getTransport ().record ();
     else
-        this.model.getTransport ().record ();
+        this.model.getTransport ().toggleLauncherOverdub ();
 };
 
 //--------------------------------------
@@ -368,40 +363,48 @@ AbstractView.prototype.switchToBrowseView = function ()
 
 AbstractView.prototype.updateButtons = function ()
 {
-    if (!this.surface.isPro)
-    {
-        this.surface.setButton (LAUNCHPAD_BUTTON_USER, this.surface.isMixerPressed () ? LAUNCHPAD_COLOR_WHITE : LAUNCHPAD_COLOR_BLACK);
-        return;
-    }
+    //if (!this.surface.isPro)
+    //{
+    //    this.surface.setButton (LAUNCHPAD_BUTTON_USER, this.surface.isMixerPressed () ? LAUNCHPAD_COLOR_WHITE : LAUNCHPAD_COLOR_BLACK);
+    //    return;
+    //}
     this.surface.setButton (LAUNCHPAD_BUTTON_USER, LAUNCHPAD_COLOR_BLACK);
     
     var isShift = this.surface.isShiftPressed ();
     var selTrack = this.model.getCurrentTrackBank ().getSelectedTrack ();
     var index = selTrack == null ? -1 : selTrack.index;
     var mode = this.surface.getControlMode ();
+	
+	var overdubEnabled = this.model.getTransport ().isLauncherOverdub;
+	var recEnabled = this.model.getTransport ().isRecording;
+	var clickOn = this.model.getTransport ().isClickOn;
+	
+	var track = this.model.getCurrentTrackBank ().getTrack (index);
+    var trackcolor = track ? track.color : LAUNCHPAD_COLOR_WHITE;
+	
+	var clickButtonColor = isShift ? (LAUNCHPAD_COLOR_RED_AMBER) : (clickOn ? LAUNCHPAD_COLOR_AMBER : LAUNCHPAD_COLOR_RED_AMBER);
+	var recButtonColor = isShift ? (recEnabled ? LAUNCHPAD_COLOR_RED : LAUNCHPAD_COLOR_GREY_LO) : (overdubEnabled ? trackcolor : LAUNCHPAD_COLOR_BLACK);
 
-    this.surface.setButton (LAUNCHPAD_BUTTON_SHIFT, isShift ? LAUNCHPAD_COLOR_WHITE : LAUNCHPAD_COLOR_GREY_LO);
-    this.surface.setButton (LAUNCHPAD_BUTTON_CLICK, isShift ? LAUNCHPAD_COLOR_GREEN_SPRING : LAUNCHPAD_COLOR_GREEN);
-    this.surface.setButton (LAUNCHPAD_BUTTON_UNDO, isShift ? LAUNCHPAD_COLOR_GREEN_SPRING : LAUNCHPAD_COLOR_GREEN);
-    this.surface.setButton (LAUNCHPAD_BUTTON_DELETE, isShift ? LAUNCHPAD_COLOR_BLACK : LAUNCHPAD_COLOR_GREEN);
-    this.surface.setButton (LAUNCHPAD_BUTTON_QUANTIZE, isShift ? LAUNCHPAD_COLOR_BLACK : LAUNCHPAD_COLOR_GREEN);
-    this.surface.setButton (LAUNCHPAD_BUTTON_DUPLICATE, isShift ? LAUNCHPAD_COLOR_GREEN_SPRING : LAUNCHPAD_COLOR_GREEN);
-    this.surface.setButton (LAUNCHPAD_BUTTON_DOUBLE, isShift ? LAUNCHPAD_COLOR_GREEN_SPRING : LAUNCHPAD_COLOR_GREEN);
-    this.surface.setButton (LAUNCHPAD_BUTTON_RECORD, isShift ? LAUNCHPAD_COLOR_ROSE : LAUNCHPAD_COLOR_RED);
+    this.surface.setButton (LAUNCHPAD_BUTTON_SHIFT, isShift ? LAUNCHPAD_COLOR_AMBER : LAUNCHPAD_COLOR_AMBER_LO);
+    this.surface.setButton (LAUNCHPAD_BUTTON_CLICK, clickButtonColor);
+    this.surface.setButton (LAUNCHPAD_BUTTON_UNDO, LAUNCHPAD_COLOR_CYAN_LO);
+    this.surface.setButton (LAUNCHPAD_BUTTON_DELETE, isShift ? LAUNCHPAD_COLOR_BLACK : LAUNCHPAD_COLOR_RED_AMBER);
+    this.surface.setButton (LAUNCHPAD_BUTTON_QUANTIZE, isShift ? LAUNCHPAD_COLOR_BLACK : LAUNCHPAD_COLOR_RED_AMBER);
+    this.surface.setButton (LAUNCHPAD_BUTTON_DUPLICATE, isShift ? LAUNCHPAD_COLOR_LIME_LO : LAUNCHPAD_COLOR_RED_AMBER);
+    this.surface.setButton (LAUNCHPAD_BUTTON_DOUBLE, isShift ? LAUNCHPAD_COLOR_LIME_LO : LAUNCHPAD_COLOR_RED_AMBER);
+    this.surface.setButton (LAUNCHPAD_BUTTON_RECORD, recButtonColor);
 
-    this.surface.setButton (LAUNCHPAD_BUTTON_REC_ARM, mode == CONTROL_MODE_REC_ARM ? LAUNCHPAD_COLOR_RED : (index == 0 ? LAUNCHPAD_COLOR_WHITE : LAUNCHPAD_COLOR_GREY_LO));
-    this.surface.setButton (LAUNCHPAD_BUTTON_TRACK, mode == CONTROL_MODE_TRACK_SELECT ? LAUNCHPAD_COLOR_GREEN : (index == 1 ? LAUNCHPAD_COLOR_WHITE : LAUNCHPAD_COLOR_GREY_LO));
-    this.surface.setButton (LAUNCHPAD_BUTTON_MUTE, mode == CONTROL_MODE_MUTE ? LAUNCHPAD_COLOR_YELLOW : (index == 2 ? LAUNCHPAD_COLOR_WHITE : LAUNCHPAD_COLOR_GREY_LO));
-    this.surface.setButton (LAUNCHPAD_BUTTON_SOLO, mode == CONTROL_MODE_SOLO ? LAUNCHPAD_COLOR_BLUE : (index == 3 ? LAUNCHPAD_COLOR_WHITE : LAUNCHPAD_COLOR_GREY_LO));
-    this.surface.setButton (LAUNCHPAD_BUTTON_VOLUME, this.surface.isActiveView (VIEW_VOLUME) ? LAUNCHPAD_COLOR_CYAN : (index == 4 ? LAUNCHPAD_COLOR_WHITE : LAUNCHPAD_COLOR_GREY_LO));
-    this.surface.setButton (LAUNCHPAD_BUTTON_PAN, this.surface.isActiveView (VIEW_PAN) ? LAUNCHPAD_COLOR_SKY : (index == 5 ? LAUNCHPAD_COLOR_WHITE : LAUNCHPAD_COLOR_GREY_LO));
-    this.surface.setButton (LAUNCHPAD_BUTTON_SENDS, this.surface.isActiveView (VIEW_SENDS) ? LAUNCHPAD_COLOR_ORCHID : (index == 6 ? LAUNCHPAD_COLOR_WHITE : LAUNCHPAD_COLOR_GREY_LO));
-    this.surface.setButton (LAUNCHPAD_BUTTON_STOP_CLIP, mode == CONTROL_MODE_STOP_CLIP ? LAUNCHPAD_COLOR_ROSE : (index == 7 ? LAUNCHPAD_COLOR_WHITE : LAUNCHPAD_COLOR_GREY_LO));
+    this.surface.setButton (LAUNCHPAD_BUTTON_REC_ARM, mode == CONTROL_MODE_REC_ARM ? LAUNCHPAD_COLOR_RED : (index == 0 ? LAUNCHPAD_COLOR_RED_AMBER : LAUNCHPAD_COLOR_GREY_LO));
+    this.surface.setButton (LAUNCHPAD_BUTTON_TRACK, mode == CONTROL_MODE_TRACK_SELECT ? LAUNCHPAD_COLOR_GREEN : (index == 1 ? LAUNCHPAD_COLOR_RED_AMBER : LAUNCHPAD_COLOR_GREY_LO));
+    this.surface.setButton (LAUNCHPAD_BUTTON_MUTE, mode == CONTROL_MODE_MUTE ? LAUNCHPAD_COLOR_YELLOW : (index == 2 ? LAUNCHPAD_COLOR_RED_AMBER : LAUNCHPAD_COLOR_GREY_LO));
+    this.surface.setButton (LAUNCHPAD_BUTTON_SOLO, mode == CONTROL_MODE_SOLO ? LAUNCHPAD_COLOR_MAGENTA_LO : (index == 3 ? LAUNCHPAD_COLOR_RED_AMBER : LAUNCHPAD_COLOR_GREY_LO));
+    this.surface.setButton (LAUNCHPAD_BUTTON_VOLUME, this.surface.isActiveView (VIEW_VOLUME) ? LAUNCHPAD_COLOR_CYAN : (index == 4 ? LAUNCHPAD_COLOR_RED_AMBER : LAUNCHPAD_COLOR_GREY_LO));
+    this.surface.setButton (LAUNCHPAD_BUTTON_PAN, this.surface.isActiveView (VIEW_PAN) ? LAUNCHPAD_COLOR_SKY : (index == 5 ? LAUNCHPAD_COLOR_RED_AMBER : LAUNCHPAD_COLOR_GREY_LO));
+    this.surface.setButton (LAUNCHPAD_BUTTON_SENDS, this.surface.isActiveView (VIEW_SENDS) ? LAUNCHPAD_COLOR_ORCHID : (index == 6 ? LAUNCHPAD_COLOR_RED_AMBER : LAUNCHPAD_COLOR_GREY_LO));
+    this.surface.setButton (LAUNCHPAD_BUTTON_STOP_CLIP, mode == CONTROL_MODE_STOP_CLIP ? LAUNCHPAD_COLOR_ROSE : (index == 7 ? LAUNCHPAD_COLOR_RED_AMBER : LAUNCHPAD_COLOR_GREY_LO));
 
     // Update the front LED with the color of the current track
-    var track = this.model.getCurrentTrackBank ().getTrack (index);
-    var color = track ? track.color : 0;
-    this.surface.output.sendSysex (SYSEX_HEADER + "0A 63 " + toHexStr ([ color ? color : 0 ]) + " F7");
+    //this.surface.output.sendSysex (SYSEX_HEADER + "0A 63 " + toHexStr ([ trackcolor ? trackcolor : 0 ]) + " F7");
 };
 
 AbstractView.prototype.updateArrowStates = function ()

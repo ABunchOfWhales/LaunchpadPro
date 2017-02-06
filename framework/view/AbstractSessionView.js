@@ -73,7 +73,7 @@ AbstractSessionView.prototype.onGridNote = function (note, velocity)
     var tb = this.model.getCurrentTrackBank ();
     var slot = tb.getTrack (t).slots[s];
     var slots = tb.getClipLauncherSlots (t);
-    
+
     // Delete selected clip
     if (this.surface.isDeletePressed ())
     {
@@ -81,16 +81,34 @@ AbstractSessionView.prototype.onGridNote = function (note, velocity)
         slots.deleteClip (s);
         return;
     }
-    
-    if (this.surface.isSelectPressed ())
-    {
-        slots.select (s);
-        return;
-    }
+	// Duplicate selected clip
+	if (this.surface.isDuplicatePressed ())
+	{
+		this.surface.setButtonConsumed (this.surface.duplicateButtonId);
+		slots.duplicateClip (s);
+		return;
+	}
+	
+	// Create new empty clip
+	if (this.surface.isDoublePressed ())
+	{
+		this.surface.setButtonConsumed (this.surface.doubleButtonId);
+		tb.createClip (t, s, this.model.getQuartersPerMeasure ());
+		return;
+	}
+
+    //if (this.surface.isSelectPressed ())
+    //{
+    //    slots.select (s);
+    //    return;
+    //}
 
     if (this.doSelectClipOnLaunch ())
+	{
         slots.select (s);
-    
+		slots.showInEditor (s);
+    }
+	
     if (tb.getTrack (t).recarm)
     {
         if (!slot.isRecording)

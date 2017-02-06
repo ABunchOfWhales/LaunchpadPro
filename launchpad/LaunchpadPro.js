@@ -111,6 +111,8 @@ function LaunchpadPro (output, input)
     
     this.shiftButtonId  = LAUNCHPAD_BUTTON_SHIFT;
     this.deleteButtonId = LAUNCHPAD_BUTTON_DELETE;
+	this.duplicateButtonId = LAUNCHPAD_BUTTON_DUPLICATE;
+	this.doubleButtonId = LAUNCHPAD_BUTTON_DOUBLE;
     this.soloButtonId   = LAUNCHPAD_BUTTON_SOLO;
     this.muteButtonId   = LAUNCHPAD_BUTTON_MUTE;
 

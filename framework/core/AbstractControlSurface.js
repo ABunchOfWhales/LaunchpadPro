@@ -329,6 +329,16 @@ AbstractControlSurface.prototype.isDeletePressed = function ()
     return this.isPressed (this.deleteButtonId);
 };
 
+AbstractControlSurface.prototype.isDoublePressed = function ()
+{
+    return this.isPressed (this.doubleButtonId);
+};
+
+AbstractControlSurface.prototype.isDuplicatePressed = function ()
+{
+    return this.isPressed (this.duplicateButtonId);
+};
+
 AbstractControlSurface.prototype.isSoloPressed = function ()
 {
     return this.isPressed (this.soloButtonId);
@@ -474,9 +484,4 @@ AbstractControlSurface.prototype.getFractionValue = function ()
 AbstractControlSurface.prototype.changeValue = function (control, value)
 {
     return changeValue (control, value, this.getFractionValue (), Config.maxParameterValue);
-};
-
-AbstractControlSurface.prototype.sendMidiEvent = function (status, data1, data2)
-{
-    this.noteInput.sendRawMidiEvent (status, data1, data2);
 };
